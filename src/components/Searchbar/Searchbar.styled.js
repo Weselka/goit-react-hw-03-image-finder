@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Searchbar = styled.header`
+export const SearchbarHeader = styled.header`
   top: 0;
   left: 0;
   position: sticky;
