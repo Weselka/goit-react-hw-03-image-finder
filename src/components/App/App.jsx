@@ -1,6 +1,10 @@
 import { Component } from 'react';
 
-import { Container, Heading, Section, Searchbar, SearchForm } from 'components';
+import {
+  Container,
+  // Section,
+  Searchbar,
+} from 'components';
 
 export class App extends Component {
   state = {};
@@ -8,14 +12,10 @@ export class App extends Component {
   render() {
     return (
       <>
+        <Searchbar />
         <Container>
-          <Searchbar></Searchbar>
-          <SearchForm></SearchForm>
-        </Container>
-        <Container>
-          <Section>
-            <Heading marginBottom="50px" textAlign="center"></Heading>
-          </Section>
+          {/* <Section>            
+          </Section> */}
         </Container>
       </>
     );
