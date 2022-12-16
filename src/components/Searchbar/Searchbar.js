@@ -11,7 +11,7 @@ import {
 
 export class Searchbar extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    imagesName: PropTypes.string.isRequired,
   };
 
   state = {
@@ -27,14 +27,13 @@ export class Searchbar extends Component {
 
     if (this.state.imagesName.trim() === '') {
       return toast.error('Add name');
-      
     }
     this.props.onSubmit(this.state.imagesName);
     this.setState({ imagesName: '' });
   };
 
   render() {
-    // const { name } = this.state;
+    const { imagesName } = this.state;
     return (
       <SearchbarHeader>
         <FormBlock onSubmit={this.handleSubmit}>
@@ -46,7 +45,7 @@ export class Searchbar extends Component {
             autocomplete="off"
             autoFocus
             placeholder="Search images and photos"
-            // value={name}
+            value={imagesName}
             onChange={this.handleChange}
             name="imagesName"
             // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"

@@ -14,23 +14,23 @@ import {
 // const API_KEY = '30883328-4550d73a5a5d91ad50d778095';
 export class App extends Component {
   state = {
-    images: null,
+    // images: null,
     imagesName: '',
-    loading: false,
+    // loading: false,
   };
 
   componentDidMount() {
-    this.setState({ loading: true });
-    fetch(
-      'https://pixabay.com/api/?key=30883328-4550d73a5a5d91ad50d778095&q=${car}&page=12'
-    )
-      .then(res => res.json())
-      .then(images => this.setState({ images }))
-      .finally(() => this.setState({ loading: false }));
+    // this.setState({ loading: true });
+    // fetch(
+    //   'https://pixabay.com/api/?key=30883328-4550d73a5a5d91ad50d778095&q=${car}&page=1'
+    // )
+    //   .then(res => res.json())
+    //   .then(images => this.setState({ ...images }))
+    //   .finally(() => this.setState({ loading: false }));
   }
 
   handleSearchFormSubmit = imagesName => {
-    // console.log(imagesName);
+    console.log(imagesName);
     this.setState({ imagesName });
   };
 
@@ -39,8 +39,10 @@ export class App extends Component {
       <>
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
         <Container>
-          <ImageGallery imagesName={this.state.imagesName}/>
-            
+          <div>
+            <ImageGallery imagesName={this.state.imagesName} />
+            {/* {this.state.images} */}
+          </div>
           {/* <Section></Section> */}
         </Container>
         <ToastContainer autoClose={3000} />

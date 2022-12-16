@@ -1,13 +1,16 @@
-import {
-  ImageGalleryItemLi,
-  ImageGalleryItemImg,
-} from './ImageGalleryItem.styled';
+// import { ImageGalleryLi, ImageGalleryImage } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = () => {
-  // console.log(items);
-  return (
-    <ImageGalleryItemLi >
-      <ImageGalleryItemImg src="" alt=""></ImageGalleryItemImg>
-    </ImageGalleryItemLi>
-  );
+export const ImageGalleryItem = images => {
+  console.log(images);
+  // return (
+  //   <>
+  //     {images.map(image => {
+  //       return (
+  //         <ImageGalleryLi key={image.id}>
+  //           <ImageGalleryImage src="" alt=""></ImageGalleryImage>
+  //         </ImageGalleryLi>
+  //       );
+  //     })}
+  //   </>
+  // );
 };
