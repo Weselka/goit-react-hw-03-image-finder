@@ -40,13 +40,7 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
         <Container>
           <ImageGallery imagesName={this.state.imagesName}/>
-            {this.state.images && (
-            <div>
-              {this.state.loading && <h1>Download</h1>}
-              {/* {this.state.images} */}
-              images fetch
-            </div>
-          )}
+            
           {/* <Section></Section> */}
         </Container>
         <ToastContainer autoClose={3000} />
@@ -54,6 +48,16 @@ export class App extends Component {
     );
   }
 }
+
+// {
+//   this.state.images && (
+//     <div>
+//       {this.state.loading && <h1>Download</h1>}
+//       {/* {this.state.images} */}
+//       images fetch
+//     </div>
+//   );
+// }
 
 // addContact = data => {
 //   const presence = this.state.contacts.some(
