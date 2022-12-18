@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import axios from 'axios';
 
 import {
   Container,
@@ -10,12 +9,12 @@ import {
   ImageGallery,
 } from 'components';
 
-// const BASE_URL = 'https://pixabay.com/api/';
-// const API_KEY = '30883328-4550d73a5a5d91ad50d778095';
+
 export class App extends Component {
   state = {
     // images: null,
     imagesName: '',
+    page: 1,
     // loading: false,
   };
 
@@ -30,20 +29,27 @@ export class App extends Component {
   }
 
   handleSearchFormSubmit = imagesName => {
-    console.log(imagesName);
     this.setState({ imagesName });
+  };
+
+  btnLoadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
 
   render() {
     return (
       <>
-        <Searchbar onSubmit={this.handleSearchFormSubmit} />
+        <Searchbar
+          onSubmit={this.handleSearchFormSubmit}
+          page={this.state.page}
+        />
         <Container>
-          <div>
-            <ImageGallery imagesName={this.state.imagesName} />
-            {/* {this.state.images} */}
-          </div>
-          {/* <Section></Section> */}
+          <ImageGallery
+            imagesName={this.state.imagesName}
+            page={this.state.page}
+          />
         </Container>
         <ToastContainer autoClose={3000} />
       </>
