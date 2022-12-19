@@ -2,8 +2,17 @@ import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchImages } from '../../services/Images-api';
+import { Section } from '../Section/Section.styled'
+import { ErrorText, ErrorBox } from '../ImageError/ImageError.styled';
+import { Audio } from 'react-loader-spinner';
 
-import { Container, Searchbar, ImageGallery, LoadMore } from 'components';
+import {
+  Container,
+  Searchbar,
+  ImageGallery,
+  LoadMore,
+  ImageError,
+} from 'components';
 
 
 export class App extends Component {
@@ -16,7 +25,7 @@ export class App extends Component {
     status: 'idle',
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(_, prevState) {
     const prevName = prevState.imagesName;
     const nextName = this.state.imagesName;
     const prevPage = prevState.page;
@@ -28,7 +37,6 @@ export class App extends Component {
         images: [],
         status: 'idle',
       });
-      // window.scroll(0, 0);
     }
 
     if (prevName !== nextName || prevPage !== nextPage) {
@@ -71,29 +79,47 @@ export class App extends Component {
 
     if (status === 'idle') {
       return (
-        <>
+        <Section>
           <Searchbar onSubmit={this.handleSearchFormSubmit} />
-          <h2>Add a photo to view or enter another name</h2>
+          <ErrorBox>
+            <ErrorText>Add a photo to view or enter another name</ErrorText>
+          </ErrorBox>
           <ToastContainer autoClose={3000} />
-        </>
+        </Section>
       );
     }
     if (status === 'pending') {
-      return <h1>Download</h1>;
+      return (
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="green"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
+      );
     }
     if (status === 'rejected') {
-      return <h1>{error.message}</h1>;
+      return (
+        <Section>
+          <Searchbar onSubmit={this.handleSearchFormSubmit} />
+          <ImageError message={error.message}>{error.message}</ImageError>
+          <ToastContainer autoClose={3000} />
+        </Section>
+      );
     }
     if (status === 'resolved') {
       return (
-        <>
+        <Section>
           <Searchbar onSubmit={this.handleSearchFormSubmit} />
           <Container>
             <ImageGallery imagesName={this.state.imagesName} images={images} />
           </Container>
           {images.length < totalHits && <LoadMore onClick={this.btnLoadMore} />}
           <ToastContainer autoClose={3000} />
-        </>
+        </Section>
       );
     }
   }

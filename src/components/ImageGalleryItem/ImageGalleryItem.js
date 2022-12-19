@@ -25,7 +25,7 @@ export class ImageGalleryItem extends Component {
           loading="lazy"
         ></ImageGalleryImage>
         {this.state.showModal && (
-          <Modal>
+          <Modal onClose={this.toggleModal}>
             <img
               key={image.id}
               src={image.largeImageURL}
