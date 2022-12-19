@@ -1,29 +1,39 @@
+import { Component } from 'react';
 import { ImageGalleryLi, ImageGalleryImage } from './ImageGalleryItem.styled';
 import { Modal } from 'components';
 
-export const ImageGalleryItem = ({ images, onClick }) => {
-  console.log(images);
-  return (
-    <>
-      {images.map(image => {
-        const { id, webformatURL, tags, largeImageURL } = image;
-        return (
-          <ImageGalleryLi key={id} onShowModal={onClick}>
-            <ImageGalleryImage
-              src={webformatURL}
-              alt={tags}
-              width="240"
-              loading="lazy"
-            ></ImageGalleryImage>
-            {onClick && (
-              <Modal>
-                <img src={largeImageURL} alt={tags}></img>
-              </Modal>
-            )}
-            {/* <Modal /> */}
-          </ImageGalleryLi>
-        );
-      })}
-    </>
-  );
-};
+export class ImageGalleryItem extends Component {
+  state = {
+    showModal: false,
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
+  render() {
+    const { image } = this.props;
+
+    return (
+      <ImageGalleryLi key={image.id} onClick={this.toggleModal}>
+        <ImageGalleryImage
+          src={image.webformatURL}
+          alt={image.tags}
+          width="240"
+          loading="lazy"
+        ></ImageGalleryImage>
+        {this.state.showModal && (
+          <Modal>
+            <img
+              key={image.id}
+              src={image.largeImageURL}
+              alt={image.tags}
+            ></img>
+          </Modal>
+        )}
+      </ImageGalleryLi>
+    );
+  }
+}
