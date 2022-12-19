@@ -1,15 +1,10 @@
-// import { Button } from './Button.styled';
+import { Button } from './Button.styled';
 
-// export const LoadMore = () => {
-//   //   handleSubmit = e => {
-//   //     e.preventDefault();
-//   //     this.setState({});
-//   //   };
-//   const btnLoadMore = () => {
-//     this.setState(prevState => ({
-//       page: prevState.page + 1,
-//     }));
-//   };
+export const LoadMore = ({onClick}) => {
 
-//   return <Button onClick={this.btnLoadMore}>Load More</Button>;
-// };
+  return (
+    <Button onClick={onClick} type="button">
+      Load More
+    </Button>
+  );
+};

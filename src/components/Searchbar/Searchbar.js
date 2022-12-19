@@ -26,7 +26,7 @@ export class Searchbar extends Component {
     e.preventDefault();
 
     if (this.state.imagesName.trim() === '') {
-      return toast.error('Add name');
+      return toast.error('Enter a name');
     }
     this.props.onSubmit(this.state.imagesName);
     this.setState({ imagesName: '' });
