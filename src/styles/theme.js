@@ -13,6 +13,7 @@ export const theme = Object.freeze({
   fills: {
     green: '#66FF99',
     red: '#FF0000',
+    dark: '#212121',
   },
   fontSizes: {
     small: '14px',
