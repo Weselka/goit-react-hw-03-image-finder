@@ -16,14 +16,3 @@ export class Modal extends Component {
     );
   }
 }
-
-// export const Modal = ({ images }) => {
-//   console.log(images);
-//   return (
-//     <Overlay >
-//       <ModalBox >
-//         <img src="" alt="" />
-//       </ModalBox>
-//     </Overlay>
-//   );
-// };
