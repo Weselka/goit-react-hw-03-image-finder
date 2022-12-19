@@ -24,3 +24,9 @@ export const Button = styled.button`
     background-color: #303f9f;
   }
 `;
+
+export const UserInfo = styled.div`
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+`;
