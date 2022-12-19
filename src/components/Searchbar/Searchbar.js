@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { theme } from '../../styles/theme';
+
 import {
   SearchbarHeader,
   FormBlock,
@@ -38,6 +41,7 @@ export class Searchbar extends Component {
       <SearchbarHeader>
         <FormBlock onSubmit={this.handleSubmit}>
           <SearchFormButton type="submit">
+            <AiOutlineSearch fill={theme.fills.dark} />
             <SearchFormButtonLabel>Search</SearchFormButtonLabel>
           </SearchFormButton>
           <SearchFormInput
