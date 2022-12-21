@@ -1,10 +1,9 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchImages } from '../../services/Images-api';
-import { Section } from '../Section/Section.styled'
-import { ErrorText, ErrorBox } from '../ImageError/ImageError.styled';
-import { Audio } from 'react-loader-spinner';
+import { Section, ErrorText, ErrorBox, Loader } from 'components';
 
 import {
   Container,
@@ -14,8 +13,18 @@ import {
   ImageError,
 } from 'components';
 
-
 export class App extends Component {
+  static propTypes = {
+    state: PropTypes.shape({
+      imagesName: PropTypes.string.isRequired,
+      images: PropTypes.array.isRequired,
+      page: PropTypes.number.isRequired,
+      totalHits: PropTypes.number.isRequired,
+      error: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    }),
+  };
+
   state = {
     imagesName: '',
     images: [],
@@ -25,44 +34,56 @@ export class App extends Component {
     status: 'idle',
   };
 
-  async componentDidUpdate(_, prevState) {
+  componentDidUpdate(_, prevState) {
     const prevName = prevState.imagesName;
     const nextName = this.state.imagesName;
     const prevPage = prevState.page;
     const nextPage = this.state.page;
 
-    if (prevName !== nextName) {
+    // if (prevName !== nextName) {
+    //   this.setState({
+    //     page: 1,
+    //     images: [],
+    //     status: 'idle',
+    //   });
+    // }
+
+    if (prevName !== nextName || prevPage !== nextPage) {
       this.setState({
         page: 1,
         images: [],
         status: 'idle',
       });
-    }
-
-    if (prevName !== nextName || prevPage !== nextPage) {
-      try {
-        this.setState({ status: 'pending' });
-        const {
-          hits,
-          total,
-          totalHits,
-          // page: currentPage,
-        } = await fetchImages(nextName, nextPage);
-        if (hits.length === 0) {
-          this.setState({ status: 'idle' });
-          return;
-        }
-        this.setState(prevState => ({
-          images: [...prevState.images, ...hits],
-          total: total,
-          totalHits: totalHits,
-          status: 'resolved',
-        }));
-      } catch (error) {
-        this.setState({ error, status: 'rejected' });
-      }
+      this.getImages(nextName, nextPage);
     }
   }
+
+  getImages = async (nextName, page) => {
+    if (!nextName) {
+      return;
+    }
+    try {
+      this.setState({ status: 'pending' });
+      const {
+        hits,
+        total,
+        totalHits,
+        // page: currentPage,
+      } = await fetchImages(nextName, page);
+      if (hits.length === 0) {
+        this.setState({ status: 'idle' });
+        return;
+      }
+      this.setState(prevState => ({
+        images: [...prevState.images, ...hits],
+        total,
+        totalHits,
+        status: 'resolved',
+      }));
+    } catch (error) {
+      this.setState({ error, status: 'rejected' });
+    }
+  };
 
   handleSearchFormSubmit = imagesName => {
     this.setState({ imagesName });
@@ -75,7 +96,7 @@ export class App extends Component {
   };
 
   render() {
-    const { images, error, status, totalHits } = this.state;
+    const { images, error, status, totalHits, imagesName } = this.state;
 
     if (status === 'idle') {
       return (
@@ -90,22 +111,18 @@ export class App extends Component {
     }
     if (status === 'pending') {
       return (
-        <Audio
-          height="80"
-          width="80"
-          radius="9"
-          color="green"
-          ariaLabel="loading"
-          wrapperStyle
-          wrapperClass
-        />
+        <Section>
+          <Loader />
+        </Section>
       );
     }
     if (status === 'rejected') {
       return (
         <Section>
           <Searchbar onSubmit={this.handleSearchFormSubmit} />
-          <ImageError message={error.message}>{error.message}</ImageError>
+          <Container>
+            <ImageError message={error.message}>{error.message}</ImageError>
+          </Container>
           <ToastContainer autoClose={3000} />
         </Section>
       );
@@ -115,7 +132,7 @@ export class App extends Component {
         <Section>
           <Searchbar onSubmit={this.handleSearchFormSubmit} />
           <Container>
-            <ImageGallery imagesName={this.state.imagesName} images={images} />
+            <ImageGallery imagesName={imagesName} images={images} />
           </Container>
           {images.length < totalHits && <LoadMore onClick={this.btnLoadMore} />}
           <ToastContainer autoClose={3000} />
