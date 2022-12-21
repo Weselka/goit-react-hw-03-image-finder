@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from 'components';
 import { ImageGalleryList } from './ImageGallery.styled';
@@ -15,3 +16,9 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  image: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+};

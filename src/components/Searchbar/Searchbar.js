@@ -14,7 +14,12 @@ import {
 
 export class Searchbar extends Component {
   static propTypes = {
-    imagesName: PropTypes.string.isRequired,
+    state: PropTypes.shape({
+      imagesName: PropTypes.string.isRequired,
+      handleChange: PropTypes.func.isRequired,
+      handleSubmit: PropTypes.func.isRequired,
+    }),
+    onSubmit: PropTypes.func.isRequired,
   };
 
   state = {
@@ -27,11 +32,13 @@ export class Searchbar extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const { imagesName } = this.state;
+    const { onSubmit } = this.props;
 
-    if (this.state.imagesName.trim() === '') {
+    if (imagesName.trim() === '') {
       return toast.error('Enter a name');
     }
-    this.props.onSubmit(this.state.imagesName);
+    onSubmit(imagesName);
     this.setState({ imagesName: '' });
   };
 

@@ -1,8 +1,22 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryLi, ImageGalleryImage } from './ImageGalleryItem.styled';
 import { Modal } from 'components';
 
 export class ImageGalleryItem extends Component {
+  static propTypes = {
+    state: PropTypes.shape({
+      showModal: PropTypes.bool.isRequired,
+      toggleModal: PropTypes.func.isRequired,
+    }),
+    image: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    }),
+  };
+
   state = {
     showModal: false,
   };
